@@ -1,22 +1,48 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { config } from '../config';
 
 function Home() {
-      const [count, setCount] = useState(0);
+    const [playlists, setPlaylists] = useState([]);
 
-      const increment = () => setCount(count + 1);
-      const decrement = () => setCount(count - 1);
-      const reset = () => setCount(0);
-      console.log("Abhi");
+    useEffect(() => {
+
+        fetch(config.apiBaseUrl + ``)
+            .then(response => response.json())
+            .then(data => setPlaylists(data));
+    }, []);
 
     return (
         <div>
-            <h1>Welcome to My Profile App</h1>
-            <p>This is the home page of the application.</p>
-
-            <h2>Counter: {count}</h2>
-            <button onClick={increment}>Increase</button>
-            <button onClick={decrement}>Decrement</button>
-            <button onClick={reset} style={{ marginLeft: '1em' }}>Reset</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Playlist ID</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Playlist</th>
+                        <th>Type</th>
+                        <th>Custom Parameters</th>
+                        <th>Playlist Config</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {playlists.map(playlist => (
+                        <tr key={playlist.id}>
+                            <td>{playlist.id}</td>
+                            <td>{playlist.title}</td>
+                            <td>{playlist.description}</td>
+                            <td>{playlist.playlist}</td>
+                            <td>{playlist.type}</td>
+                            <td>{playlist.custom_parameters}</td>
+                            <td>{playlist.playlist_config}</td>
+                            <td>{playlist.created_at}</td>
+                            <td>{playlist.updated_at}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }

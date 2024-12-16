@@ -2,19 +2,26 @@
     display: grid;
     grid-template-areas: "logo nav";
     background-color: #f2f2f2;
-    padding: 8px;
+    /* padding: 8px; */
     align-items: center;
+}
+
+.logo {
+    height: 50px;
+    width: 100px;
+    grid-area: logo;
+
+    padding: 0;
 }
 
 .Nav {
     grid-area: nav;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-gap: 5px;
     align-items: center;
     justify-content: center;
     background-color: #ffffff;
-    padding: 10px;
     border-radius: 5px;
 }
 
