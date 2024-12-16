@@ -1,19 +1,23 @@
 import { useState, useEffect } from 'react';
 import { config } from '../config';
+import { getAllPlaylists } from '../utils/playlist';
+import './Home.css';
 
 function Home() {
     const [playlists, setPlaylists] = useState([]);
 
     useEffect(() => {
-
-        fetch(config.apiBaseUrl + ``)
-            .then(response => response.json())
-            .then(data => setPlaylists(data));
+        const fetchData = async () => {
+            const result = await getAllPlaylists();
+            console.log("Result: ", result)
+            setPlaylists(result);
+        };
+        fetchData();
     }, []);
 
     return (
         <div>
-            <table>
+            <table className="home">
                 <thead>
                     <tr>
                         <th>Playlist ID</th>
@@ -29,14 +33,14 @@ function Home() {
                 </thead>
                 <tbody>
                     {playlists.map(playlist => (
-                        <tr key={playlist.id}>
-                            <td>{playlist.id}</td>
+                        <tr>
+                            <td>{playlist.playlist_id}</td>
                             <td>{playlist.title}</td>
                             <td>{playlist.description}</td>
-                            <td>{playlist.playlist}</td>
+                            <td>{JSON.stringify(playlist.media_id)}</td>
                             <td>{playlist.type}</td>
-                            <td>{playlist.custom_parameters}</td>
-                            <td>{playlist.playlist_config}</td>
+                            <td>{JSON.stringify(playlist.custom_parameters)}</td>
+                            <td>{JSON.stringify(playlist.playlist_config)}</td>
                             <td>{playlist.created_at}</td>
                             <td>{playlist.updated_at}</td>
                         </tr>
